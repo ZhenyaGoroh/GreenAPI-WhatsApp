@@ -1,0 +1,34 @@
+@import "../../styles/general.scss";
+
+.registration {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    &__image {
+        background: url("../../assets/nature.jpg") no-repeat;
+        width: 50%;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+    }
+}
+
+.image {
+    &__svg {
+        width: 15rem;
+    }
+}
+
+.form {
+    &__header {
+        font-weight: 500;
+        font-size: $title-fs;
+    }
+}

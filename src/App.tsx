@@ -1,10 +1,16 @@
 import React from "react"
 import "./App.scss"
+import { Routes, Route } from "react-router-dom"
+import Registration from "./pages/Registration/Registration"
+import Chats from "./pages/Chats/Chats"
 
 function App() {
   return (
     <div>
-      <div>App1</div>
+      <Routes>
+        <Route path="/" element={<Chats />} />
+        <Route path="/registration" element={<Registration />} />
+      </Routes>
     </div>
   )
 }
