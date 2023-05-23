@@ -19,5 +19,8 @@ module.exports = {
     project: "./tsconfig.json",
   },
   plugins: ["react", "@typescript-eslint", "prettier"],
-  rules: {},
-};
+  rules: {
+    "import/prefer-default-export": "off",
+    "import/no-named-as-default": "off",
+  },
+}
