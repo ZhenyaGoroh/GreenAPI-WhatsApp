@@ -1,6 +1,6 @@
 import React from "react"
 import s from "./Registration.module.scss"
-import RegistrationForm from "../../components/RegistrationForm"
+import RegistrationForm from "../../components/RegistrationForm/RegistrationForm"
 
 function Registration() {
   return (

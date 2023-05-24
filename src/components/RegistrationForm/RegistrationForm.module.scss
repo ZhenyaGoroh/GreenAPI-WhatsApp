@@ -1,4 +1,4 @@
-@import "../styles/general.scss";
+@import "../../styles/general.scss";
 
 .form {
     max-width: 75%;
@@ -25,26 +25,26 @@
         background-color: inherit;
         color: $font-cl;
         width: 50%;
-        transition: all .2s;
+        transition: all 0.2s;
         background-color: $accent-cl;
         cursor: pointer;
-        &:hover{
+        &:hover {
             scale: 1.1;
         }
+        &:disabled{
+            opacity: 0.6;
+        }
     }
-    &__error{
+    &__error {
         color: $red-cl;
         font-size: 1rem;
-        margin: -.5rem 0;
+        margin: -0.5rem 0;
     }
 }
 
 .input {
     &__legend {
         font-size: $text-fs;
-        &_styled {
-            text-decoration: underline;
-        }
     }
     &__field {
         background-color: $secondary-cl;
@@ -59,9 +59,9 @@
     }
 }
 
-@media screen and (max-width:620px){
-    .form{
-        &__input{
+@media screen and (max-width: 620px) {
+    .form {
+        &__input {
             width: 100%;
         }
     }

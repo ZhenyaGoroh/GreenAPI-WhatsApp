@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import s from "./RegistrationForm.module.scss"
-import { useStore } from "../store/userStore"
+import { useStore } from "../../store/userStore"
 
 function RegistrationForm() {
-  const { setIdInstance, setApiTokenInstance } = useStore()
+  const { IdInstance, setIdInstance, setApiTokenInstance } = useStore()
   const [idInstanceState, setIdInstanceState] = useState<string>("")
   const [ApiTokenInstanceState, setApiTokenInstanceState] = useState<string>("")
   const [errorState, setErrorState] = useState<boolean>(false)
@@ -20,6 +20,7 @@ function RegistrationForm() {
         document.cookie = `idInstance=${idInstanceState}; path=/`
         document.cookie = `ApiTokenInstance=${ApiTokenInstanceState}; path=/`
         setErrorState(false)
+
         navigate("/")
       })
       .catch(() => setErrorState(true))
@@ -28,9 +29,7 @@ function RegistrationForm() {
   return (
     <form onSubmit={(e) => e.preventDefault} className={s.form}>
       <div className={s.form__input}>
-        <legend className={s.input__legend}>
-          <span className={s.input__legend_styled}>IdInstance</span>
-        </legend>
+        <legend className={s.input__legend}>IdInstance</legend>
         <input
           placeholder="Enter your IdInstance"
           required
@@ -42,9 +41,7 @@ function RegistrationForm() {
         />
       </div>
       <div className={s.form__input}>
-        <legend className={s.input__legend}>
-          <span className={s.input__legend_styled}>ApiTokenInstance</span>
-        </legend>
+        <legend className={s.input__legend}>ApiTokenInstance</legend>
         <input
           placeholder="Enter your ApiTokenInstance"
           type="text"

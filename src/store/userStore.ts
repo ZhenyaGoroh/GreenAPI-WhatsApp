@@ -11,8 +11,14 @@ interface Action {
 }
 
 export const useStore = create<State & Action>((set) => ({
-  IdInstance: "",
-  ApiTokenInstance: "",
+  IdInstance:
+    document.cookie.length > 1
+      ? document.cookie.split("; ")[0].split("=")[1]
+      : "",
+  ApiTokenInstance:
+    document.cookie.length > 1
+      ? document.cookie.split("; ")[1].split("=")[1]
+      : "",
   setIdInstance: (newIdInstance: string) =>
     set(() => ({ IdInstance: newIdInstance })),
   setApiTokenInstance: (newApiTokenInstance: string) =>
