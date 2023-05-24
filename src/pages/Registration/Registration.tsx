@@ -1,5 +1,6 @@
 import React from "react"
 import s from "./Registration.module.scss"
+import RegistrationForm from "../../components/RegistrationForm"
 
 function Registration() {
   return (
@@ -15,6 +16,7 @@ function Registration() {
         <h1 className={s.form__header}>
           Welcome to Green API WhatsApp service
         </h1>
+        <RegistrationForm />
       </section>
     </main>
   )

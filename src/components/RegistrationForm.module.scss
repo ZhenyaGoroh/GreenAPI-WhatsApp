@@ -1,0 +1,68 @@
+@import "../styles/general.scss";
+
+.form {
+    max-width: 75%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    &__input {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        // align-items: center;
+        justify-content: center;
+        gap: 0.2rem;
+    }
+    &__btn {
+        padding: 0.4rem 0.8rem;
+        border: 1px solid $accent-cl;
+        border-radius: 5px;
+        font-size: $text-fs;
+        background-color: inherit;
+        color: $font-cl;
+        width: 50%;
+        transition: all .2s;
+        background-color: $accent-cl;
+        cursor: pointer;
+        &:hover{
+            scale: 1.1;
+        }
+    }
+    &__error{
+        color: $red-cl;
+        font-size: 1rem;
+        margin: -.5rem 0;
+    }
+}
+
+.input {
+    &__legend {
+        font-size: $text-fs;
+        &_styled {
+            text-decoration: underline;
+        }
+    }
+    &__field {
+        background-color: $secondary-cl;
+        outline: none;
+        border: 1px solid $accent-cl;
+        border-radius: 5px;
+        color: $font-cl;
+        padding: 0.4rem;
+        &:focus {
+            background-color: $active-cl;
+        }
+    }
+}
+
+@media screen and (max-width:620px){
+    .form{
+        &__input{
+            width: 100%;
+        }
+    }
+}
