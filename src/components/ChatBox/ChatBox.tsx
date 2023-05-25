@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from "react"
 import { FaRegUserCircle } from "react-icons/fa"
 import s from "./ChatBox.module.scss"
@@ -10,7 +11,11 @@ function ChatBox({ chat, active }: { chat: Chat; active: boolean }) {
         <span className={s.content__number}>{chat.receiverNumber}</span>
         <span className={s.content__message}>
           {chat.messages.length > 0 ? (
-            chat.messages[chat.messages.length - 1].text
+            chat.messages[chat.messages.length - 1].text.length > 30 ? (
+              `${chat.messages[chat.messages.length - 1].text.slice(0, 30)}...`
+            ) : (
+              chat.messages[chat.messages.length - 1].text
+            )
           ) : (
             <i className={s.content__message_empty}>Write your first message</i>
           )}

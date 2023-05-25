@@ -1,0 +1,21 @@
+@import "../../styles/general.scss";
+
+.sender {
+    display: flex;
+    align-items: center;
+    background-color: #005c4b;
+    max-width: 40%;
+    align-self: flex-end;
+    padding: .3rem;
+    border-radius: 5px;
+}
+
+.receiver {
+    display: flex;
+    align-items: center;
+    background-color: $secondary-cl;
+    max-width: 40%;
+    align-self: flex-start;
+    padding: .3rem;
+    border-radius: 5px;
+}

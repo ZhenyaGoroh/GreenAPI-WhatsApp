@@ -1,23 +1,61 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, KeyboardEvent } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa"
+import { v4 as uuidv4 } from "uuid"
 import s from "./Chat.module.scss"
 import { useStore } from "../../store/userStore"
+import Message from "../Message/Message"
 
 function Chat({
   handleActiveBoxIndex,
 }: {
   handleActiveBoxIndex: (index: number) => void
 }) {
-  const { chats, addMessage } = useStore()
+  const { chats, addMessage, IdInstance, ApiTokenInstance, number, setNumber } =
+    useStore()
   const location = useLocation()
   const navigate = useNavigate()
+  const [message, setMessage] = useState<string>("")
   let chat: Chat
   if (location.state) {
     chat = location.state
   } else {
     chat = { receiverNumber: "", messages: [] }
   }
+
+  const sendMessage = () => {
+    addMessage(
+      {
+        text: message,
+        sender: number,
+        timestamp: Date.now(),
+      },
+      chat.receiverNumber
+    )
+    setMessage("")
+  }
+
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      sendMessage()
+    }
+  }
+
+  useEffect(() => {
+    if (number.length === 0) {
+      fetch(
+        `https://api.green-api.com/waInstance${IdInstance}/getSettings/${ApiTokenInstance}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          setNumber(data.wid)
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
+  }, [IdInstance, ApiTokenInstance, number, setNumber])
 
   useEffect(() => {
     if (
@@ -34,7 +72,6 @@ function Chat({
     }
   }, [navigate, chat.receiverNumber, chats, handleActiveBoxIndex])
 
-  const [message, setMessage] = useState<string>("")
   return (
     <div className={s.chat}>
       <div className={s.chat__header}>
@@ -42,7 +79,17 @@ function Chat({
         <span className={s.header__number}>{chat.receiverNumber}</span>
       </div>
       <div className={s.chat__view}>
-        <div className={s.view__messages} />
+        <div className={s.view__messages}>
+          {chats
+            .filter((c) => c.receiverNumber === chat.receiverNumber)[0]
+            .messages.map((mes) => (
+              <Message
+                key={uuidv4()}
+                text={mes.text}
+                sender={mes.sender === number}
+              />
+            ))}
+        </div>
         <div className={s.view__input}>
           <div className={s.input__wrapper}>
             <textarea
@@ -50,14 +97,17 @@ function Chat({
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               className={s.input__field}
+              onKeyDown={(e) => {
+                handleKeyDown(e)
+              }}
             />
             <button
               disabled={message.length < 1}
               type="button"
               className={s.input__btn}
-              // onClick={() => {
-              //   addMessage({})
-              // }}
+              onClick={() => {
+                sendMessage()
+              }}
             >
               Send
             </button>
