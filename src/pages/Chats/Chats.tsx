@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { useNavigate, Route, Routes, Link } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa"
 import { RiChatNewFill } from "react-icons/ri"
@@ -17,9 +17,9 @@ function Chats() {
   const [newChatNumber, setNewChatNumber] = useState<string>("")
   const [activeBoxIndex, setActiveBoxIndex] = useState<number>()
 
-  const handleActiveBoxIndex = (index: number) => {
+  const handleActiveBoxIndex = useCallback((index: number) => {
     setActiveBoxIndex(index)
-  }
+  }, [])
 
   useEffect(() => {
     if (IdInstance.length < 1 || ApiTokenInstance.length < 1) {

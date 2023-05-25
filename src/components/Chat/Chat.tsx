@@ -9,7 +9,7 @@ function Chat({
 }: {
   handleActiveBoxIndex: (index: number) => void
 }) {
-  const { chats } = useStore()
+  const { chats, addMessage } = useStore()
   const location = useLocation()
   const navigate = useNavigate()
   let chat: Chat
@@ -32,7 +32,7 @@ function Chat({
         break
       }
     }
-  }, [navigate, chat, chats, handleActiveBoxIndex])
+  }, [navigate, chat.receiverNumber, chats, handleActiveBoxIndex])
 
   const [message, setMessage] = useState<string>("")
   return (
@@ -55,6 +55,9 @@ function Chat({
               disabled={message.length < 1}
               type="button"
               className={s.input__btn}
+              // onClick={() => {
+              //   addMessage({})
+              // }}
             >
               Send
             </button>
