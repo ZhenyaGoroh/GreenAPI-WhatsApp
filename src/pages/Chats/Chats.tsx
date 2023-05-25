@@ -6,10 +6,11 @@ import { IoArrowBack } from "react-icons/io5"
 import s from "./Chats.module.scss"
 import { useStore } from "../../store/userStore"
 import Chat from "../../components/Chat/Chat"
+import ChatBox from "../../components/ChatBox/ChatBox"
 
 function Chats() {
   const navigate = useNavigate()
-  const { IdInstance, ApiTokenInstance } = useStore()
+  const { IdInstance, ApiTokenInstance, addChat, chats } = useStore()
   const modalRef = useRef<HTMLDivElement>(null)
 
   const [addChatStatus, setAddChatStatus] = useState<boolean>(false)
@@ -60,11 +61,18 @@ function Chats() {
             disabled={newChatNumber.length < 1}
             type="button"
             className={s.modal__btn}
+            onClick={() => {
+              addChat({ receiverNumber: newChatNumber, messages: [] })
+              setNewChatNumber("")
+              setAddChatStatus(false)
+            }}
           >
             Add chat
           </button>
         </div>
-        <div className={s.chatsFeed__feed} />
+        <div className={s.chatsFeed__feed}>
+          <ChatBox />
+        </div>
       </section>
       <section className={s.chatView}>
         <div>

@@ -20,6 +20,8 @@ type Message = {
 interface Action {
   setIdInstance: (newIdInstance: string) => void
   setApiTokenInstance: (newApiTokenInstance: string) => void
+  addChat: (newChat: Chat) => void
+  addMessage: (newMessage: Message, receiverNumber: string) => void
 }
 
 export const useStore = create<State & Action>((set) => ({
@@ -36,5 +38,18 @@ export const useStore = create<State & Action>((set) => ({
   setApiTokenInstance: (newApiTokenInstance: string) =>
     set(() => ({ ApiTokenInstance: newApiTokenInstance })),
 
-  chats: [{ receiverNumber: "123123", messages: [] }],
+  chats: [],
+  addChat: (newChat: Chat) =>
+    set((state) => ({ chats: [...state.chats, newChat] })),
+  addMessage: (newMessage: Message, receiverNumber: string) =>
+    set((state) => ({
+      chats: state.chats.map((chat) =>
+        chat.receiverNumber === receiverNumber
+          ? {
+              ...chat,
+              messages: [...chat.messages, newMessage],
+            }
+          : chat
+      ),
+    })),
 }))
