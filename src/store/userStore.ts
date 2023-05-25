@@ -3,6 +3,18 @@ import { create } from "zustand"
 interface State {
   IdInstance: string
   ApiTokenInstance: string
+  chats: Chat[]
+}
+
+type Chat = {
+  receiverNumber: string
+  messages: Message[]
+}
+
+type Message = {
+  text: string
+  sender: string
+  timestamp: number
 }
 
 interface Action {
@@ -23,4 +35,6 @@ export const useStore = create<State & Action>((set) => ({
     set(() => ({ IdInstance: newIdInstance })),
   setApiTokenInstance: (newApiTokenInstance: string) =>
     set(() => ({ ApiTokenInstance: newApiTokenInstance })),
+
+  chats: [{ receiverNumber: "123123", messages: [] }],
 }))
