@@ -27,7 +27,10 @@ export const useStore = create<State & Action>((set) => ({
   setApiTokenInstance: (newApiTokenInstance: string) =>
     set(() => ({ ApiTokenInstance: newApiTokenInstance })),
 
-  chats: [],
+  chats: (() => {
+    const storedResults = localStorage.getItem("chats")
+    return storedResults !== null ? JSON.parse(storedResults) : []
+  })(),
   addChat: (newChat: Chat) =>
     set((state) => ({ chats: [...state.chats, newChat] })),
   addMessage: (newMessage: Message, receiverNumber: string) =>

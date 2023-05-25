@@ -16,13 +16,16 @@ function Chats() {
   const [addChatStatus, setAddChatStatus] = useState<boolean>(false)
   const [newChatNumber, setNewChatNumber] = useState<string>("")
   const [activeBoxIndex, setActiveBoxIndex] = useState<number>()
+
+  const handleActiveBoxIndex = (index: number) => {
+    setActiveBoxIndex(index)
+  }
+
   useEffect(() => {
     if (IdInstance.length < 1 || ApiTokenInstance.length < 1) {
       navigate("/registration")
     }
-  })
-
-  useEffect(() => {
+    localStorage.setItem("chats", JSON.stringify(chats))
     if (modalRef.current) {
       if (addChatStatus) {
         modalRef.current.style.left = "0"
@@ -30,7 +33,7 @@ function Chats() {
         modalRef.current.style.left = "-500px"
       }
     }
-  }, [addChatStatus])
+  })
 
   return (
     <main className={s.chats}>
@@ -84,12 +87,13 @@ function Chats() {
           ))}
         </div>
       </section>
-      <section className={s.chatView}>
-        <div>
-          <Routes>
-            <Route path="/*" element={<Chat />} />
-          </Routes>
-        </div>
+      <section className={s.chatsView}>
+        <Routes>
+          <Route
+            path="/*"
+            element={<Chat handleActiveBoxIndex={handleActiveBoxIndex} />}
+          />
+        </Routes>
       </section>
     </main>
   )
