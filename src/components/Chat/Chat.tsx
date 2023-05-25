@@ -32,7 +32,7 @@ function Chat({
         break
       }
     }
-  })
+  }, [navigate, chat, chats, handleActiveBoxIndex])
 
   const [message, setMessage] = useState<string>("")
   return (
