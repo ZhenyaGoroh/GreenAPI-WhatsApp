@@ -7,3 +7,12 @@ body {
     color: $font-cl;
     background-color: $primary-cl;
 }
+
+::-webkit-scrollbar {
+    width: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: $secondary-cl;
+  }
+  

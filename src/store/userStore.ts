@@ -6,17 +6,6 @@ interface State {
   chats: Chat[]
 }
 
-type Chat = {
-  receiverNumber: string
-  messages: Message[]
-}
-
-type Message = {
-  text: string
-  sender: string
-  timestamp: number
-}
-
 interface Action {
   setIdInstance: (newIdInstance: string) => void
   setApiTokenInstance: (newApiTokenInstance: string) => void

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useNavigate, Route, Routes } from "react-router-dom"
+import { useNavigate, Route, Routes, Link } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa"
 import { RiChatNewFill } from "react-icons/ri"
 import { IoArrowBack } from "react-icons/io5"
@@ -15,6 +15,7 @@ function Chats() {
 
   const [addChatStatus, setAddChatStatus] = useState<boolean>(false)
   const [newChatNumber, setNewChatNumber] = useState<string>("")
+  const [activeBoxIndex, setActiveBoxIndex] = useState<number>()
   useEffect(() => {
     if (IdInstance.length < 1 || ApiTokenInstance.length < 1) {
       navigate("/registration")
@@ -71,7 +72,16 @@ function Chats() {
           </button>
         </div>
         <div className={s.chatsFeed__feed}>
-          <ChatBox />
+          {chats.map((chat, index) => (
+            <Link
+              state={chat}
+              key={chat.receiverNumber}
+              to={`/${chat.receiverNumber}`}
+              onClick={() => setActiveBoxIndex(index)}
+            >
+              <ChatBox active={activeBoxIndex === index} chat={chat} />
+            </Link>
+          ))}
         </div>
       </section>
       <section className={s.chatView}>

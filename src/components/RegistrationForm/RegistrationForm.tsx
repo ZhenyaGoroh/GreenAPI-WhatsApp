@@ -17,8 +17,8 @@ function RegistrationForm() {
       .then(() => {
         setIdInstance(idInstanceState)
         setApiTokenInstance(ApiTokenInstanceState)
-        document.cookie = `idInstance=${idInstanceState}; path=/; max-age=3600`
-        document.cookie = `ApiTokenInstance=${ApiTokenInstanceState}; path=/ ;max-age=3600`
+        document.cookie = `idInstance=${idInstanceState}; path=/; max-age=36000`
+        document.cookie = `ApiTokenInstance=${ApiTokenInstanceState}; path=/ ;max-age=36000`
         setErrorState(false)
 
         navigate("/")
