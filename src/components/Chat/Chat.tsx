@@ -24,14 +24,6 @@ function Chat({
   }
 
   const sendMessage = () => {
-    addMessage(
-      {
-        text: message,
-        sender: number,
-        timestamp: Date.now(),
-      },
-      chat.receiverNumber
-    )
     fetch(
       `https://api.green-api.com/waInstance${IdInstance}/sendMessage/${ApiTokenInstance}`,
       {
@@ -44,9 +36,26 @@ function Chat({
           message,
         }),
       }
-    ).catch((error) => {
-      console.error(error)
-    })
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        }
+        throw new Error(`${response.status}`)
+      })
+      .then(() => {
+        addMessage(
+          {
+            text: message,
+            sender: number,
+            timestamp: Date.now(),
+          },
+          chat.receiverNumber
+        )
+      })
+      .catch((error) => {
+        console.error(error)
+      })
     setMessage("")
   }
 

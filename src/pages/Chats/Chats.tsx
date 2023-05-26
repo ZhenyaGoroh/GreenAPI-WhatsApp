@@ -75,8 +75,6 @@ function Chats() {
     fetchData()
   }, [])
 
-  // fetchData()
-
   useEffect(() => {
     if (IdInstance.length < 1 || ApiTokenInstance.length < 1) {
       navigate("/registration")
