@@ -1,4 +1,4 @@
-import React, { useState, useEffect, KeyboardEvent } from "react"
+import React, { useState, useEffect, KeyboardEvent, useRef } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa"
 import { v4 as uuidv4 } from "uuid"
@@ -66,6 +66,8 @@ function Chat({
     }
   }
 
+  const messagesRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     if (number.length === 0) {
       fetch(
@@ -94,6 +96,9 @@ function Chat({
         break
       }
     }
+    if (messagesRef.current) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+    }
   }, [navigate, chat.receiverNumber, chats, handleActiveBoxIndex])
 
   return (
@@ -104,7 +109,7 @@ function Chat({
       </div>
       <div className={s.chat__view}>
         <div className={s.view__messages}>
-          <div className={s.view__messages_content}>
+          <div ref={messagesRef} className={s.view__messages_content}>
             {chats
               .filter((c) => c.receiverNumber === chat.receiverNumber)
               .map(
