@@ -10,7 +10,8 @@ import ChatBox from "../../components/ChatBox/ChatBox"
 
 function Chats() {
   const navigate = useNavigate()
-  const { IdInstance, ApiTokenInstance, addChat, chats } = useStore()
+  const { IdInstance, ApiTokenInstance, addChat, chats, addMessage, number } =
+    useStore()
   const modalRef = useRef<HTMLDivElement>(null)
 
   const [addChatStatus, setAddChatStatus] = useState<boolean>(false)
@@ -20,6 +21,61 @@ function Chats() {
   const handleActiveBoxIndex = useCallback((index: number) => {
     setActiveBoxIndex(index)
   }, [])
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        `https://api.green-api.com/waInstance${IdInstance}/receiveNotification/${ApiTokenInstance}`
+      )
+      if (response.ok) {
+        const data = await response.json()
+
+        if (data !== null) {
+          const sender = data.body.senderData.sender.slice(0, -5)
+          const { timestamp } = data.body
+          const { textMessage } = data.body.messageData.textMessageData
+
+          if (
+            chats.filter((chat) => chat.receiverNumber === sender).length !==
+              0 &&
+            chats
+              .filter((chat) => chat.receiverNumber === sender)[0]
+              .messages.filter(
+                (mes) =>
+                  mes.timestamp === timestamp &&
+                  mes.sender === sender &&
+                  mes.text === textMessage
+              ).length === 0
+          ) {
+            addMessage({ text: textMessage, sender, timestamp }, sender)
+          } else if (
+            chats.filter((chat) => chat.receiverNumber === sender).length === 0
+          ) {
+            addChat({
+              receiverNumber: sender,
+              messages: [{ text: textMessage, sender, timestamp }],
+            })
+          }
+
+          await fetch(
+            `https://api.green-api.com/waInstance${IdInstance}/deleteNotification/${ApiTokenInstance}/${data.receiptId}`,
+            {
+              method: "DELETE",
+            }
+          )
+        }
+      }
+      await fetchData()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  // fetchData()
 
   useEffect(() => {
     if (IdInstance.length < 1 || ApiTokenInstance.length < 1) {
