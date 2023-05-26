@@ -37,16 +37,22 @@ export const useStore = create<State & Action>((set) => ({
   })(),
 
   addChat: (newChat: Chat) =>
-    set((state) => ({ chats: [...state.chats, newChat] })),
+    set((state) => {
+      const updatedChats = [...state.chats, newChat]
+      localStorage.setItem("chats", JSON.stringify(updatedChats))
+      return { chats: updatedChats }
+    }),
   addMessage: (newMessage: Message, receiverNumber: string) =>
-    set((state) => ({
-      chats: state.chats.map((chat) =>
+    set((state) => {
+      const updatedChats = state.chats.map((chat) =>
         chat.receiverNumber === receiverNumber
           ? {
               ...chat,
               messages: [...chat.messages, newMessage],
             }
           : chat
-      ),
-    })),
+      )
+      localStorage.setItem("chats", JSON.stringify(updatedChats))
+      return { chats: updatedChats }
+    }),
 }))

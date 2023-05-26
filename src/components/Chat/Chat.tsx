@@ -104,19 +104,21 @@ function Chat({
       </div>
       <div className={s.chat__view}>
         <div className={s.view__messages}>
-          {chats
-            .filter((c) => c.receiverNumber === chat.receiverNumber)
-            .map(
-              (filteredChat) =>
-                filteredChat.messages && // Добавляем проверку наличия свойства messages
-                filteredChat.messages.map((mes) => (
-                  <Message
-                    key={uuidv4()}
-                    text={mes.text}
-                    sender={mes.sender === number}
-                  />
-                ))
-            )}
+          <div className={s.view__messages_content}>
+            {chats
+              .filter((c) => c.receiverNumber === chat.receiverNumber)
+              .map(
+                (filteredChat) =>
+                  filteredChat.messages && // Добавляем проверку наличия свойства messages
+                  filteredChat.messages.map((mes) => (
+                    <Message
+                      key={uuidv4()}
+                      text={mes.text}
+                      sender={mes.sender === number}
+                    />
+                  ))
+              )}
+          </div>
         </div>
         <div className={s.view__input}>
           <div className={s.input__wrapper}>

@@ -3,6 +3,7 @@ import { useNavigate, Route, Routes, Link } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa"
 import { RiChatNewFill } from "react-icons/ri"
 import { IoArrowBack } from "react-icons/io5"
+import { v4 as uuidv4 } from "uuid"
 import s from "./Chats.module.scss"
 import { useStore } from "../../store/userStore"
 import Chat from "../../components/Chat/Chat"
@@ -10,7 +11,7 @@ import ChatBox from "../../components/ChatBox/ChatBox"
 
 function Chats() {
   const navigate = useNavigate()
-  const { IdInstance, ApiTokenInstance, addChat, chats, addMessage, number } =
+  const { IdInstance, ApiTokenInstance, addChat, chats, addMessage } =
     useStore()
   const modalRef = useRef<HTMLDivElement>(null)
 
@@ -51,10 +52,14 @@ function Chats() {
           } else if (
             chats.filter((chat) => chat.receiverNumber === sender).length === 0
           ) {
-            addChat({
+            // console.log(chats.filter((chat) => chat.receiverNumber === sender))
+
+            await addChat({
               receiverNumber: sender,
               messages: [{ text: textMessage, sender, timestamp }],
             })
+            // eslint-disable-next-line no-restricted-globals
+            location.reload()
           }
 
           await fetch(
@@ -73,6 +78,7 @@ function Chats() {
 
   useEffect(() => {
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -132,7 +138,7 @@ function Chats() {
           {chats.map((chat, index) => (
             <Link
               state={chat}
-              key={chat.receiverNumber}
+              key={uuidv4()}
               to={`/${chat.receiverNumber}`}
               onClick={() => setActiveBoxIndex(index)}
             >
