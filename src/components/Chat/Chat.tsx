@@ -32,6 +32,21 @@ function Chat({
       },
       chat.receiverNumber
     )
+    fetch(
+      `https://api.green-api.com/waInstance${IdInstance}/sendMessage/${ApiTokenInstance}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chatId: `${chat.receiverNumber}@c.us`,
+          message,
+        }),
+      }
+    ).catch((error) => {
+      console.error(error)
+    })
     setMessage("")
   }
 
@@ -81,14 +96,18 @@ function Chat({
       <div className={s.chat__view}>
         <div className={s.view__messages}>
           {chats
-            .filter((c) => c.receiverNumber === chat.receiverNumber)[0]
-            .messages.map((mes) => (
-              <Message
-                key={uuidv4()}
-                text={mes.text}
-                sender={mes.sender === number}
-              />
-            ))}
+            .filter((c) => c.receiverNumber === chat.receiverNumber)
+            .map(
+              (filteredChat) =>
+                filteredChat.messages && // Добавляем проверку наличия свойства messages
+                filteredChat.messages.map((mes) => (
+                  <Message
+                    key={uuidv4()}
+                    text={mes.text}
+                    sender={mes.sender === number}
+                  />
+                ))
+            )}
         </div>
         <div className={s.view__input}>
           <div className={s.input__wrapper}>
