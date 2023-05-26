@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react"
 import { useNavigate, Route, Routes, Link } from "react-router-dom"
 import { FaUserCircle } from "react-icons/fa"
 import { RiChatNewFill } from "react-icons/ri"
+import { GiHamburgerMenu } from "react-icons/gi"
 import { IoArrowBack } from "react-icons/io5"
+import { IoMdClose } from "react-icons/io"
 import { v4 as uuidv4 } from "uuid"
 import s from "./Chats.module.scss"
 import { useStore } from "../../store/userStore"
@@ -14,10 +16,13 @@ function Chats() {
   const { IdInstance, ApiTokenInstance, addChat, chats, addMessage } =
     useStore()
   const modalRef = useRef<HTMLDivElement>(null)
+  const chatsFeedRef = useRef<HTMLDivElement>(null)
+  const chatsViewRef = useRef<HTMLDivElement>(null)
 
   const [addChatStatus, setAddChatStatus] = useState<boolean>(false)
   const [newChatNumber, setNewChatNumber] = useState<string>("")
   const [activeBoxIndex, setActiveBoxIndex] = useState<number>()
+  const [burgerOpen, setBurgerOpen] = useState<boolean>(false)
 
   const [first, setFirst] = useState("")
 
@@ -92,14 +97,45 @@ function Chats() {
       if (addChatStatus) {
         modalRef.current.style.left = "0"
       } else {
-        modalRef.current.style.left = "-500px"
+        modalRef.current.style.left = `-${modalRef.current.offsetWidth + 100}px`
+      }
+    }
+    if (window.innerWidth < 1000) {
+      if (chatsFeedRef.current) {
+        chatsFeedRef.current.style.width = `${chatsViewRef.current?.offsetWidth}px`
+        if (burgerOpen) {
+          chatsFeedRef.current.style.left = "4rem"
+        } else {
+          chatsFeedRef.current.style.left = `-${
+            chatsFeedRef.current.offsetWidth + 20
+          }px`
+        }
       }
     }
   })
 
   return (
     <main className={s.chats}>
-      <section className={s.chatsFeed}>
+      <div className={s.burger}>
+        <div className={s.burger__header}>
+          {!burgerOpen ? (
+            <GiHamburgerMenu
+              onClick={() => setBurgerOpen(true)}
+              size={30}
+              fill="#e9edef"
+              className={s.burger__icon}
+            />
+          ) : (
+            <IoMdClose
+              onClick={() => setBurgerOpen(false)}
+              size={40}
+              fill="#e9edef"
+              className={s.burger__icon}
+            />
+          )}
+        </div>
+      </div>
+      <section ref={chatsFeedRef} className={s.chatsFeed}>
         <div className={s.chatsFeed__header}>
           <FaUserCircle size={40} fill="#e9edef" />
           <RiChatNewFill
@@ -154,7 +190,7 @@ function Chats() {
           ))}
         </div>
       </section>
-      <section className={s.chatsView}>
+      <section ref={chatsViewRef} className={s.chatsView}>
         <Routes>
           <Route
             path="/*"

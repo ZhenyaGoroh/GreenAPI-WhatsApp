@@ -6,6 +6,7 @@
     display: flex;
     width: 100%;
     height: 100vh;
+    position: relative;
 }
 
 .chatsFeed {
@@ -107,7 +108,40 @@
     }
 }
 
-.chatsView{
+.chatsView {
     width: 70%;
     height: 100%;
+}
+
+.burger {
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    .burger {
+        display: flex;
+        width: 3rem;
+        box-sizing: border-box;
+        &__header {
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        &__icon {
+            color: $font-cl;
+            fill: $font-cl;
+        }
+    }
+
+    .chatsFeed {
+        position: absolute;
+        top: 5rem;
+        background-color: $secondary-cl;
+        transition: all 0.2s;
+        box-sizing: border-box;
+    }
+    .chatsView {
+        width: 100%;
+    }
 }
