@@ -19,6 +19,8 @@ function Chats() {
   const [newChatNumber, setNewChatNumber] = useState<string>("")
   const [activeBoxIndex, setActiveBoxIndex] = useState<number>()
 
+  const [first, setFirst] = useState("")
+
   const handleActiveBoxIndex = useCallback((index: number) => {
     setActiveBoxIndex(index)
   }, [])
@@ -58,8 +60,8 @@ function Chats() {
               receiverNumber: sender,
               messages: [{ text: textMessage, sender, timestamp }],
             })
-            // eslint-disable-next-line no-restricted-globals
-            location.reload()
+            setFirst("asda")
+            // console.log(first)
           }
 
           await fetch(
@@ -126,7 +128,12 @@ function Chats() {
             type="button"
             className={s.modal__btn}
             onClick={() => {
-              addChat({ receiverNumber: newChatNumber, messages: [] })
+              if (
+                chats.filter((c) => c.receiverNumber === newChatNumber)
+                  .length === 0
+              ) {
+                addChat({ receiverNumber: newChatNumber, messages: [] })
+              }
               setNewChatNumber("")
               setAddChatStatus(false)
             }}
