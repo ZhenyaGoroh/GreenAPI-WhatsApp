@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid"
 import s from "./Chat.module.scss"
 import { useStore } from "../../store/userStore"
 import Message from "../Message/Message"
+import { TChat } from "../../types/types"
 
 function Chat({
   handleActiveBoxIndex,
@@ -16,7 +17,7 @@ function Chat({
   const location = useLocation()
   const navigate = useNavigate()
   const [message, setMessage] = useState<string>("")
-  let chat: Chat
+  let chat: TChat
   if (location.state) {
     chat = location.state
   } else {

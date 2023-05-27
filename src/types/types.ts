@@ -1,12 +1,10 @@
-type Chat = {
+export type TChat = {
   receiverNumber: string
-  messages: Message[]
+  messages: TMessage[]
 }
 
-type Message = {
+export type TMessage = {
   text: string
   sender: string
   timestamp: number
 }
-
-export {}
