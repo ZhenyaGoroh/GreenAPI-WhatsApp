@@ -2,8 +2,9 @@
 import React from "react"
 import { FaRegUserCircle } from "react-icons/fa"
 import s from "./ChatBox.module.scss"
+import { TChat } from "../../types/types"
 
-function ChatBox({ chat, active }: { chat: Chat; active: boolean }) {
+function ChatBox({ chat, active }: { chat: TChat; active: boolean }) {
   return (
     <div className={active ? `${s.box} ${s.box_active}` : s.box}>
       <FaRegUserCircle size={40} />
