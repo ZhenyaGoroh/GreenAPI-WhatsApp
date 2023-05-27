@@ -8,3 +8,5 @@ type Message = {
   sender: string
   timestamp: number
 }
+
+export {}
