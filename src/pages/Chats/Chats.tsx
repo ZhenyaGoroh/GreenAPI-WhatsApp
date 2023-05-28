@@ -24,8 +24,6 @@ function Chats() {
   const [activeBoxIndex, setActiveBoxIndex] = useState<number>()
   const [burgerOpen, setBurgerOpen] = useState<boolean>(false)
 
-  const [first, setFirst] = useState("")
-
   const handleActiveBoxIndex = useCallback((index: number) => {
     setActiveBoxIndex(index)
   }, [])
@@ -65,8 +63,6 @@ function Chats() {
               receiverNumber: sender,
               messages: [{ text: textMessage, sender, timestamp }],
             })
-            setFirst("asda")
-            // console.log(first)
           }
 
           await fetch(
