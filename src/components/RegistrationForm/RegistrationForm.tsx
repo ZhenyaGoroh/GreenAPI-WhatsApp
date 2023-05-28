@@ -21,7 +21,7 @@ function RegistrationForm() {
         document.cookie = `ApiTokenInstance=${ApiTokenInstanceState}; path=/ ;max-age=36000`
         setErrorState(false)
 
-        navigate("/")
+        navigate("/GreenAPI-WhatsApp/")
       })
       .catch(() => setErrorState(true))
   }

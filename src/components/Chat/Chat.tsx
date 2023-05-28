@@ -88,7 +88,7 @@ function Chat({
     if (
       chats.filter((c) => c.receiverNumber === chat.receiverNumber).length === 0
     ) {
-      navigate("/")
+      navigate("/GreenAPI-WhatsApp/")
     }
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < chats.length; i++) {
