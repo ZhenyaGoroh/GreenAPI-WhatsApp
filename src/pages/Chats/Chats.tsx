@@ -90,7 +90,7 @@ function Chats() {
 
   useEffect(() => {
     if (IdInstance.length < 1 || ApiTokenInstance.length < 1) {
-      navigate("/registration")
+      navigate("/GreenAPI-WhatsApp/registration")
     }
     localStorage.setItem("chats", JSON.stringify(chats))
     if (modalRef.current) {
