@@ -9,7 +9,7 @@ function App() {
     <div>
       <Routes>
         <Route path="*" element={<Chats />} />
-        <Route path="/registration" element={<Registration />} />
+        <Route path="/GreenAPI-WhatsApp/registration" element={<Registration />} />
       </Routes>
     </div>
   )
