@@ -182,7 +182,7 @@ function Chats() {
             <Link
               state={chat}
               key={uuidv4()}
-              to={`/${chat.receiverNumber}`}
+              to={`/GreenAPI-WhatsApp/${chat.receiverNumber}`}
               onClick={() => setActiveBoxIndex(index)}
             >
               <ChatBox active={activeBoxIndex === index} chat={chat} />
